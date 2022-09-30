@@ -1,4 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import {
   IonApp,
   IonIcon,
@@ -34,10 +35,25 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+
+
+import { Smartlook, SmartlookSetupConfig, SmartlookSetupConfigBuilder } from '@awesome-cordova-plugins/smartlook'
+import smartlookClient from 'smartlook-client'
+
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
+
+const App: React.FC = () => {
+
+  useEffect(() => {
+    console.log(process.env.REACT_APP_NOT_SECRET_CODE)
+    // console.log("INIT SL CLIENT", smartlookClient.init('', { region: 'eu' }))
+    console.log("INIT SMARTLOOK SETUP", Smartlook.setupAndStartRecording( new SmartlookSetupConfig(String(process.env.REACT_APP_NOT_SECRET_CODE)) ))
+    // const mySmartlook = new SmartlookSetupConfigBuilder('')
+    // console.log("INIT SMARTLOOK BUILDER 3", JSON.stringify(mySmartlook.startNewSession(true) ))
+  }, [])
+  
+  return (<IonApp>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
@@ -57,20 +73,20 @@ const App: React.FC = () => (
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/tab1">
             <IonIcon icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
+            <IonLabel>SIonic 1</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab2" href="/tab2">
             <IonIcon icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
+            <IonLabel>SIonic 2</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab3" href="/tab3">
             <IonIcon icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+            <IonLabel>SIonic 3</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>
   </IonApp>
-);
+)};
 
 export default App;
